@@ -9,32 +9,32 @@ namespace ChefByStep.API.Repos
     {
         public RecipeRepo(DatabaseContext context) : base(context)
         {
-
         }
+
         public override Task<Recipe> GetAsync(int id)
         {
             return _context.Recipes
-                .Include(x => x.CompletedBy)
-                .Include(x => x.CreatedBy)
-                .Include(x => x.FavouritedBy)
                 .Include(x => x.Ratings)
                 .Include(x => x.Steps)
                 .Include(x => x.Ingredients)
+                    .ThenInclude(x => x.Ingredient)
+                .Include(x => x.FavouritedBy)
+                .Include(x => x.CompletedBy)
+                .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public override Task<List<Recipe>> GetAllAsync()
         {
             return _context.Recipes
-                .Include(x => x.CompletedBy)
-                .Include(x => x.CreatedBy)
-                .Include(x => x.FavouritedBy)
                 .Include(x => x.Ratings)
                 .Include(x => x.Steps)
                 .Include(x => x.Ingredients)
+                    .ThenInclude(x => x.Ingredient)
+                .Include(x => x.FavouritedBy)
+                .Include(x => x.CompletedBy)
+                .Include(x => x.User)
                 .ToListAsync();
         }
-
-
     }
 }

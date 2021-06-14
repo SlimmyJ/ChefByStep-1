@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChefByStep.API.Entities
 {
@@ -6,7 +9,6 @@ namespace ChefByStep.API.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Quantity { get; set; }
-        public List<Recipe> Recipes { get; set; }
+        public List<RecipeIngredient> Recipes { get; set; }
     }
 }

@@ -9,15 +9,16 @@ namespace ChefByStep.API.Repos
     {
         public UserRepo(DatabaseContext context) : base(context)
         {
-
         }
+
         public override async Task<User> GetAsync(int id)
         {
             return await _context.Users
                 .Include(x => x.CompletedRecipes)
-                .Include(x => x.FavoriteRecipes)
-                .Include(x => x.CreatedRecipe)
-                .Include(x => x.Rating)
+                .ThenInclude(x => x.Recipe)
+                .Include(x => x.Ratings)
+                .Include(x => x.FavouriteRecipes)
+                .Include(x => x.CompletedRecipes)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -25,9 +26,10 @@ namespace ChefByStep.API.Repos
         {
             return await _context.Users
                 .Include(x => x.CompletedRecipes)
-                .Include(x => x.FavoriteRecipes)
-                .Include(x => x.CreatedRecipe)
-                .Include(x => x.Rating)
+                .ThenInclude(x => x.Recipe)
+                .Include(x => x.Ratings)
+                .Include(x => x.FavouriteRecipes)
+                .Include(x => x.CompletedRecipes)
                 .ToListAsync();
         }
     }
