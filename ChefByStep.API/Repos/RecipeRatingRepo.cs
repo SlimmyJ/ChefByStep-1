@@ -9,20 +9,17 @@ namespace ChefByStep.API.Repos.Interfaces
     {
         public RecipeRatingRepo(DatabaseContext context) : base(context)
         {
-
         }
+
         public override async Task<RecipeRating> GetAsync(int id)
         {
             return await _context.RecipeRatings
-                    .Include(x => x.UserId)
-                    .Include(x => x.RecipeId)
                     .FirstOrDefaultAsync(x => x.Id == id);
         }
+
         public override async Task<List<RecipeRating>> GetAllAsync()
         {
             return await _context.RecipeRatings
-                    .Include(x => x.UserId)
-                    .Include(x => x.RecipeId)
                     .ToListAsync();
         }
     }
