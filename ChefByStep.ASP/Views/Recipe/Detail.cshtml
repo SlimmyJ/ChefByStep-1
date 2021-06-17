@@ -1,4 +1,6 @@
 ﻿@model RecipeDetailViewModel
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <div class="overview">
     <div class="row">
@@ -21,33 +23,64 @@
                 <div>
                     <p>@Model.Description</p>
                 </div>
-
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
-            <div class="cooking-div" id="start-cooking">
-                <a href="#" class="prev" onclick="prev()">Previous</a>
-                <a href="#" class="next" onclick="next()">Next</a>
-                <ul>
-                    @for (int i = 1; i < Model.Steps.Count; i++)
-                    {
-                        @*<div class="step-div" id="steps" onclick="toggleStepByStep()">
-                            <p>Step: @i</p>
-                            <p id="step-intruction">@Model.Steps[i].Instruction</p>
-                        </div>*@
+                <div class="cooking-div" id="start-cooking">
+                    <a href="#" class="prev" onclick="prev()">Previous</a>
+                    <a href="#" class="next" onclick="next()">Next</a>
+                    <ul>
+                        @foreach (var (step, index) in Model.Steps.Select((v, i) => (v, i + 1)))
+                        {
+                            <div class="step-div" id="steps" onclick="toggleStepByStep()">
+                                <p>Step: @index</p>
+                                <p id="step-intruction">@step.Instruction</p>
+                            </div>
 
-                        <li class="li list-group-item">
-                            <div class="step-list" id="steps" onclick="toggleStepByStep()">
-                                <p>Step: @i</p>
-                                <div id="step-div" onclick="myFunction()">
-                                    <p class="collapse" id="step-intruction">@Model.Steps[i].Instruction</p>
+                            @*<li class="li list-group-item">
+                                <div class="step-list" id="steps" onclick="toggleStepByStep()">
+                                    <p>Step: @index</p>
+                                    <div id="step-div" onclick="myFunction()">
+                                        <p class="collapse" id="step-intruction">@step.Instruction</p>
+                                    </div>
+                                </div>
+                            </li>*@
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        @*<div class="col-sm-12 col-md-6 col-lg-6">
+            <div id="accordion">
+                        @foreach (var step in Model.Steps)
+                        {
+                            <div class="card">
+                                <div class="card-header" id="@step.Id">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#@step.Id" aria-expanded="false" aria-controls="@Model.Id">
+                                            Step @step.Id
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="@step.Id" class="show collapse" aria-labelledby="@Model.Id" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @step.Instruction
+                                    </div>
                                 </div>
                             </div>
-                        </li>
-                    }
-
-                </ul>
-            </div>
+                        }
+                </div>*@
+            @*@foreach (var (step, index) in Model.Steps.Select((v, i) => (v, i + 1)))
+            {
+                <div class="c">
+                    <input type="checkbox" id="@step.Id">
+                    <h5><label for="@step.Id">Step @index</label></h5>
+                    <div class="p">
+                        <p>@step.Instruction</p>
+                    </div>
+                </div>
+            }*@
         </div>
         <div class="btn-cook">
             <a class="btn nav-link" href="#start-cooking" onclick="toggleSteps()" id="startCooking">Start Cooking</a>
